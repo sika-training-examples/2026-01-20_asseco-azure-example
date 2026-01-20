@@ -47,6 +47,12 @@ resource "azurerm_kubernetes_cluster_node_pool" "user" {
   vm_size               = "standard_d2ds_v6"
   node_count            = 3
   vnet_subnet_id        = azurerm_subnet.aks-training.id
+
+  upgrade_settings {
+    drain_timeout_in_minutes      = 0
+    max_surge                     = "10%"
+    node_soak_duration_in_minutes = 0
+  }
 }
 
 output "aks_training_connect_command" {
