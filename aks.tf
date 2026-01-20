@@ -35,6 +35,10 @@ resource "azurerm_kubernetes_cluster" "training" {
     type = "SystemAssigned"
   }
 
+  oms_agent {
+    log_analytics_workspace_id = azurerm_log_analytics_workspace.asseco.id
+  }
+
   tags = {
     team       = "cz-cloud-brno"
     created_at = timestamp()
