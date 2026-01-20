@@ -1,0 +1,1 @@
+# 2026-01-20_asseco-azure-example
