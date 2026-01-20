@@ -1,3 +1,10 @@
+resource "azurerm_subnet" "aks-training" {
+  name                 = "internal"
+  virtual_network_name = azurerm_virtual_network.training.name
+  resource_group_name  = azurerm_resource_group.training.name
+  address_prefixes     = ["10.10.0.0/24"]
+}
+
 resource "azurerm_kubernetes_cluster" "training" {
   lifecycle {
     ignore_changes = [
@@ -15,6 +22,7 @@ resource "azurerm_kubernetes_cluster" "training" {
     temporary_name_for_rotation = "tmp"
     node_count                  = 1
     vm_size                     = "standard_d2ds_v6"
+    vnet_subnet_id              = azurerm_subnet.aks-training.id
 
     upgrade_settings {
       drain_timeout_in_minutes      = 0
@@ -31,6 +39,14 @@ resource "azurerm_kubernetes_cluster" "training" {
     team       = "cz-cloud-brno"
     created_at = timestamp()
   }
+}
+
+resource "azurerm_kubernetes_cluster_node_pool" "user" {
+  name                  = "${join("", regexall("[a-z0-9]+", lower(azurerm_resource_group.training.name)))}2"
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.training.id
+  vm_size               = "standard_d2ds_v6"
+  node_count            = 3
+  vnet_subnet_id        = azurerm_subnet.aks-training.id
 }
 
 output "aks_training_connect_command" {
