@@ -58,3 +58,8 @@ resource "azurerm_kubernetes_cluster_node_pool" "user" {
 output "aks_training_connect_command" {
   value = "az aks get-credentials --resource-group ${azurerm_kubernetes_cluster.training.resource_group_name} --name ${azurerm_kubernetes_cluster.training.name} --overwrite-existing"
 }
+
+output "aks_training_kubeconfig" {
+  value     = azurerm_kubernetes_cluster.training.kube_config_raw
+  sensitive = true
+}
