@@ -1,4 +1,10 @@
 resource "azurerm_kubernetes_cluster" "training" {
+  lifecycle {
+    ignore_changes = [
+      tags.created_at
+    ]
+  }
+
   name                = "${azurerm_resource_group.training.name}-aks"
   location            = azurerm_resource_group.training.location
   resource_group_name = azurerm_resource_group.training.name
@@ -21,7 +27,7 @@ resource "azurerm_kubernetes_cluster" "training" {
   }
 
   tags = {
-    team = "cz-cloud-brno"
+    team       = "cz-cloud-brno"
     created_at = timestamp()
   }
 }
