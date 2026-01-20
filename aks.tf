@@ -11,9 +11,10 @@ resource "azurerm_kubernetes_cluster" "training" {
   dns_prefix          = join("", regexall("[a-z0-9]+", lower(azurerm_resource_group.training.name)))
 
   default_node_pool {
-    name       = "default"
-    node_count = 1
-    vm_size    = "Standard_D2_v2"
+    name                        = join("", regexall("[a-z0-9]+", lower(azurerm_resource_group.training.name)))
+    temporary_name_for_rotation = "${join("", regexall("[a-z0-9]+", lower(azurerm_resource_group.training.name)))}tmp"
+    node_count                  = 1
+    vm_size                     = "Standard_D2_v6"
 
     upgrade_settings {
       drain_timeout_in_minutes      = 0
