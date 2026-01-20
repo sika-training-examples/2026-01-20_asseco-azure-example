@@ -14,7 +14,7 @@ resource "azurerm_kubernetes_cluster" "training" {
     name                        = join("", regexall("[a-z0-9]+", lower(azurerm_resource_group.training.name)))
     temporary_name_for_rotation = "tmp"
     node_count                  = 1
-    vm_size                     = "Standard_D2_v6"
+    vm_size                     = "standard_d2ds_v6"
 
     upgrade_settings {
       drain_timeout_in_minutes      = 0
