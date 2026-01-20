@@ -1,7 +1,7 @@
 resource "azurerm_kubernetes_cluster" "training" {
   lifecycle {
     ignore_changes = [
-      tags.created_at
+      tags["created_at"]
     ]
   }
 
