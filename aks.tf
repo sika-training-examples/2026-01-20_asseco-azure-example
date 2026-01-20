@@ -12,7 +12,7 @@ resource "azurerm_kubernetes_cluster" "training" {
 
   default_node_pool {
     name                        = join("", regexall("[a-z0-9]+", lower(azurerm_resource_group.training.name)))
-    temporary_name_for_rotation = "${join("", regexall("[a-z0-9]+", lower(azurerm_resource_group.training.name)))}tmp"
+    temporary_name_for_rotation = "tmp"
     node_count                  = 1
     vm_size                     = "Standard_D2_v6"
 
